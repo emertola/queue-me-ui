@@ -28,7 +28,7 @@ function App() {
 
   return (
     <>
-      <main className="py-10 h-screen space-y-5">
+      <main className="py-10 h-screen space-y-5 overflow-y-auto">
         <h1 className="text-4xl font-semibold text-center">Todos:</h1>
         <div className="max-w-2xl mx-auto bg-slate-100 rounded-md p-8 space-y-5">
           <AddTodoItem onSubmit={addTodo} />

@@ -25,7 +25,7 @@ const AddTodoItem = ({ onSubmit }: AddTodoItemProps) => {
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder="Add a new task..."
+        placeholder="Add a new todo item..."
         className="rounded-s-md grow border border-gray-400 p-2"
       />
 
