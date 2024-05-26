@@ -22,6 +22,10 @@ function App() {
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
 
+  const deleteTodo = (id: number) => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  };
+
   return (
     <>
       <main className="py-10 h-screen space-y-5">
@@ -36,6 +40,7 @@ function App() {
                 onCompletedChange={() =>
                   setTodoCompleted(todo.id, !todo.completed)
                 }
+                onDelete={deleteTodo}
               />
             ))}
           </div>
