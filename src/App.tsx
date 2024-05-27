@@ -3,6 +3,7 @@ import { TODOS } from './data/todos.const';
 import { TodoItem as TodoListItem } from './types/todo.interface';
 import AddTodoItem from './components/AddTodoItem';
 import TodoList from './components/TodoList';
+import TodoSummary from './components/TodoSummary';
 
 function App() {
   const [todos, setTodos] = useState<TodoListItem[]>(TODOS);
@@ -14,16 +15,20 @@ function App() {
   };
 
   const addTodo = (title: string) => {
-    const newTodo = (prev: TodoListItem[]) => ({
-      id: prev.length + 1,
+    const newTodo = () => ({
+      id: Date.now(),
       title,
       completed: false,
     });
-    setTodos((prevTodos) => [...prevTodos, newTodo(prevTodos)]);
+    setTodos((prevTodos) => [...prevTodos, newTodo()]);
   };
 
   const deleteTodo = (id: number) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  };
+
+  const deleteCompleted = () => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => !todo.completed));
   };
 
   return (
@@ -38,6 +43,7 @@ function App() {
             onDelete={deleteTodo}
           />
         </div>
+        <TodoSummary todos={todos} deleteCompleted={deleteCompleted} />
       </main>
     </>
   );

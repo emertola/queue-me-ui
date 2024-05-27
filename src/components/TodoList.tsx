@@ -16,16 +16,23 @@ const TodoList = ({ todos, setTodoCompleted, onDelete }: TodoListProps) => {
   });
 
   return (
-    <div className="space-y-2">
-      {todosSorted.map((todo) => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          onCompletedChange={setTodoCompleted}
-          onDelete={onDelete}
-        />
-      ))}
-    </div>
+    <>
+      <div className="space-y-2">
+        {todosSorted.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onCompletedChange={setTodoCompleted}
+            onDelete={onDelete}
+          />
+        ))}
+      </div>
+      {!todos.length && (
+        <p className="text-center text-sm text-gray-400">
+          Your todos are empty.
+        </p>
+      )}
+    </>
   );
 };
 
