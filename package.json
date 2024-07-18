@@ -1,5 +1,5 @@
 {
-  "name": "react-beginner",
+  "name": "queue-me-ui",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,13 +11,25 @@
     "build:dev": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 && tsc && vite build",
     "build:css": "npx tailwindcss -o dist/build.css --minify"
   },
+  "proxy": "http://localhost:4001",
   "dependencies": {
-    "@radix-ui/react-icons": "^1.3.0",
-    "@radix-ui/react-tooltip": "^1.0.7",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@tanstack/react-query": "^5.51.9",
+    "axios": "^1.7.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "http-proxy-middleware": "^3.0.0",
+    "lucide-react": "^0.408.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tailwind-merge": "^2.4.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/http-proxy-middleware": "^1.0.0",
+    "@types/node": "^20.14.11",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
