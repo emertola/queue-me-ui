@@ -1,7 +1,7 @@
-import Login from './authentication/Login';
+import LayoutContainer from './components/shared/LayoutContainer';
 
 function App() {
-  return <Login />;
+  return <LayoutContainer />;
 }
 
 export default App;
