@@ -30,6 +30,8 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@tanstack/router-devtools": "^1.45.7",
+    "@tanstack/router-plugin": "^1.45.7",
     "@types/axios": "^0.14.0",
     "@types/http-proxy-middleware": "^1.0.0",
     "@types/node": "^20.14.11",

@@ -20,8 +20,26 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { FC } from 'react';
+import {
+  createFileRoute,
+  Link,
+  Outlet,
+  redirect,
+} from '@tanstack/react-router';
+import { getToken } from '@/api';
 
-const LayoutContainer: FC = () => {
+export const Route = createFileRoute('/(hidden)/secured')({
+  beforeLoad: () => {
+    if (!getToken()) {
+      throw redirect({
+        to: '/signin',
+      });
+    }
+  },
+  component: () => <SecuredApp />,
+});
+
+const SecuredApp: FC = () => {
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r md:block">
@@ -38,9 +56,13 @@ const LayoutContainer: FC = () => {
           </div>
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-              <Button className="flex items-center justify-start gap-3 rounded-lg bg-transparent px-3 py-2 text-primary transition-all hover:text-primary hover:bg-muted">
-                <Home className="h-4 w-4" />
-                Dashboard
+              <Button
+                className="flex items-center justify-start gap-3 rounded-lg bg-transparent px-3 py-2 text-primary transition-all hover:text-primary hover:bg-muted"
+                asChild>
+                <Link to="/secured/dashboard">
+                  <Home className="h-4 w-4" />
+                  Dashboard
+                </Link>
               </Button>
               <Button className="flex items-center justify-start gap-3 rounded-lg bg-transparent px-3 py-2 text-primary transition-all hover:text-primary hover:bg-muted">
                 <Package className="h-4 w-4" />
@@ -125,12 +147,12 @@ const LayoutContainer: FC = () => {
           </DropdownMenu>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <div className="flex items-center">
+          <Outlet />
+          {/* <div className="flex items-center">
             <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
-          </div>
-          <div
-            className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
-            x-chunk="dashboard-02-chunk-1">
+          </div> */}
+          {/* <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+            
             <div className="flex flex-col items-center gap-1 text-center">
               <h3 className="text-2xl font-bold tracking-tight">
                 You have no products
@@ -140,11 +162,11 @@ const LayoutContainer: FC = () => {
               </p>
               <Button className="mt-4">Add Product</Button>
             </div>
-          </div>
+          </div> */}
         </main>
       </div>
     </div>
   );
 };
 
-export default LayoutContainer;
+export default SecuredApp;

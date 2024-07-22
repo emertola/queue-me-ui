@@ -9,18 +9,21 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Route } from '@/routes/__root';
 import { useMutation } from '@tanstack/react-query';
+import { Link } from '@tanstack/react-router';
 import { FC, useState } from 'react';
 
 const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = Route.useNavigate();
 
   const mutation = useMutation({
     mutationFn: login,
-    onSuccess: (data) => {
+    onSuccess: () => {
       // Handle successful login, e.g., save token, redirect, etc.
-      console.log('Login successful:', data);
+      navigate({ to: '/secured' });
     },
     onError: (error) => {
       // Handle error
@@ -78,8 +81,8 @@ const Login: FC = () => {
           </div>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{' '}
-            <Button variant="link" className="underline">
-              Sign up
+            <Button variant="link" className="underline" asChild>
+              <Link to="/signup">Sign up</Link>
             </Button>
           </div>
         </CardContent>

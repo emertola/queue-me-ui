@@ -17,3 +17,5 @@ export const signUp = async (data: SignUp): Promise<SignUpResponse> => {
   );
   return response.data;
 };
+
+export const getToken = () => localStorage.getItem('token');

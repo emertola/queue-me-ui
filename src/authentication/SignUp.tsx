@@ -9,7 +9,9 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Route } from '@/routes/__root';
 import { useMutation } from '@tanstack/react-query';
+import { Link } from '@tanstack/react-router';
 import { FC, useState } from 'react';
 
 const SignUp: FC = () => {
@@ -17,12 +19,13 @@ const SignUp: FC = () => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const navigate = Route.useNavigate();
 
   const mutation = useMutation({
     mutationFn: signUp,
-    onSuccess: (data) => {
+    onSuccess: () => {
       // Handle successful login, e.g., save token, redirect, etc.
-      console.log('Login successful:', data);
+      navigate({ to: '/signin' });
     },
     onError: (error) => {
       // Handle error
@@ -97,13 +100,13 @@ const SignUp: FC = () => {
               />
             </div>
             <Button type="button" className="w-full" onClick={handleSubmit}>
-              Login
+              Sign Up
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{' '}
-            <Button variant="link" className="underline">
-              Sign up
+            <Button variant="link" className="underline" asChild>
+              <Link to="/signin">Sign in</Link>
             </Button>
           </div>
         </CardContent>
