@@ -5,7 +5,7 @@ import {
   SignUp,
   SignUpResponse,
 } from '@/models';
-import apiClient from './client.service';
+import apiClient from './api-client.service';
 
 export const login = async (
   data: LoginData
