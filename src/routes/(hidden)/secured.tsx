@@ -37,6 +37,7 @@ export const Route = createFileRoute('/(hidden)/secured')({
     }
   },
   component: () => <SecuredApp />,
+  notFoundComponent: () => <div>This page does not exist</div>,
 });
 
 const SecuredApp: FC = () => {

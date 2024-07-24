@@ -1,12 +1,21 @@
-import { LoginData, LoginResponse, SignUp, SignUpResponse } from '@/models';
+import {
+  ApiResponse,
+  LoginData,
+  LoginResponse,
+  SignUp,
+  SignUpResponse,
+} from '@/models';
 import apiClient from './client.service';
 
-export const login = async (data: LoginData): Promise<LoginResponse> => {
-  const response = await apiClient.post<LoginResponse>(
+export const login = async (
+  data: LoginData
+): Promise<ApiResponse<LoginResponse>> => {
+  const response = await apiClient.post<ApiResponse<LoginResponse>>(
     'http://localhost:4001/api/v1/auth/login',
     data
   );
-  localStorage.setItem('token', response.data.token);
+  console.log('response.data', response.data);
+  localStorage.setItem('token', response.data.data.token);
   return response.data;
 };
 

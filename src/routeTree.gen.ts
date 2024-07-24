@@ -13,8 +13,6 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ProtectedImport } from './routes/_protected'
-import { Route as ProtectedDashboardImport } from './routes/_protected/dashboard'
 import { Route as hiddenSecuredImport } from './routes/(hidden)/secured'
 import { Route as hiddenSecuredPagesDashboardImport } from './routes/(hidden)/secured/_pages/dashboard'
 
@@ -35,16 +33,6 @@ const SigninLazyRoute = SigninLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/signin.lazy').then((d) => d.Route))
 
-const ProtectedRoute = ProtectedImport.update({
-  id: '/_protected',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ProtectedDashboardRoute = ProtectedDashboardImport.update({
-  path: '/dashboard',
-  getParentRoute: () => ProtectedRoute,
-} as any)
-
 const hiddenSecuredRoute = hiddenSecuredImport.update({
   path: '/secured',
   getParentRoute: () => rootRoute,
@@ -60,13 +48,6 @@ const hiddenSecuredPagesDashboardRoute =
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_protected': {
-      id: '/_protected'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof ProtectedImport
-      parentRoute: typeof rootRoute
-    }
     '/signin': {
       id: '/signin'
       path: '/signin'
@@ -88,13 +69,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof hiddenSecuredImport
       parentRoute: typeof rootRoute
     }
-    '/_protected/dashboard': {
-      id: '/_protected/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof ProtectedDashboardImport
-      parentRoute: typeof ProtectedImport
-    }
     '/(hidden)/secured/_pages/dashboard': {
       id: '/secured/_pages/dashboard'
       path: '/dashboard'
@@ -108,7 +82,6 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  ProtectedRoute: ProtectedRoute.addChildren({ ProtectedDashboardRoute }),
   SigninLazyRoute,
   SignupLazyRoute,
   hiddenSecuredRoute: hiddenSecuredRoute.addChildren({
@@ -124,16 +97,9 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/_protected",
         "/signin",
         "/signup",
         "/secured"
-      ]
-    },
-    "/_protected": {
-      "filePath": "_protected.tsx",
-      "children": [
-        "/_protected/dashboard"
       ]
     },
     "/signin": {
@@ -147,10 +113,6 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/secured/_pages/dashboard"
       ]
-    },
-    "/_protected/dashboard": {
-      "filePath": "_protected/dashboard.tsx",
-      "parent": "/_protected"
     },
     "/secured/_pages/dashboard": {
       "filePath": "(hidden)/secured/_pages/dashboard.tsx",
