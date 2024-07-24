@@ -14,7 +14,6 @@ export const login = async (
     'http://localhost:4001/api/v1/auth/login',
     data
   );
-  console.log('response.data', response.data);
   localStorage.setItem('token', response.data.data.token);
   return response.data;
 };
