@@ -106,6 +106,7 @@ const Tickets: FC = () => {
           <Button
             variant="outline"
             className="mr-5 rounded-xl px-2 py-1"
+            disabled={!data?.currentPage}
             onClick={() =>
               setPage({ page: params.page - 1, size: params.size })
             }>
@@ -114,6 +115,7 @@ const Tickets: FC = () => {
           <Button
             variant="outline"
             className="rounded-xl px-2 py-1"
+            disabled={!data?.hasNextPage}
             onClick={() =>
               setParams((prev) => ({ ...prev, page: prev.page + 1 }))
             }>
