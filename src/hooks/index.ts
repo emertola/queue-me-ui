@@ -1,1 +1,1 @@
-// export * from './query.hook'
+export * from './query-tickets.hook';
