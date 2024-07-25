@@ -16,6 +16,7 @@ const pagedParams = new PagedParams();
 
 const Tickets: FC = () => {
   const [params, setParams] = useState(pagedParams);
+  const [selected, setSelected] = useState<string>();
   const { data, error, isLoading } = useQueryTickets(params);
 
   const setPage = (args?: PagedParams) => {
@@ -24,6 +25,10 @@ const Tickets: FC = () => {
     }
     const newParams = args ? { ...args } : { ...params };
     setParams((prevParams) => ({ ...prevParams, ...newParams }));
+  };
+
+  const setActiveTicket = (id: string | undefined) => {
+    if (id) setSelected(id);
   };
 
   if (isLoading) return <p>...Loading</p>;
@@ -50,33 +55,32 @@ const Tickets: FC = () => {
             </div>
           </div>
 
-          <div className="overflow-y-auto">
+          <div className="overflow-y-auto py-2">
             {data?.results?.map((ticket) => (
-              <div key={ticket._id}>
-                <div className="p-5 hover:rounded-xl hover:shadow-lg focus-visible:outline-transparent">
+              <div key={ticket._id} onClick={() => setActiveTicket(ticket._id)}>
+                <div
+                  className={`p-3 rounded-xl focus-visible:outline-transparent hover:bg-gray-50 ${selected === ticket._id ? 'shadow-md border border-slate-100' : ''}`}>
                   <div className="flex flex-col">
                     <div className="flex items-center justify-between">
                       <h3 className="text-xl font-semibold ml-1 mr-4">
                         {ticket.ticketNumber}
                       </h3>
-                      <div className="flex flex-col">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 hover:bg-transparent">
-                              <Ellipsis size={20} />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent>
-                            <DropdownMenuItem>Assign</DropdownMenuItem>
-                            <DropdownMenuItem>
-                              <span className="text-red-500">Delete</span>
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="block max-w-max ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 hover:bg-transparent">
+                            <Ellipsis size={20} />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem>Assign</DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <span className="text-red-500">Delete</span>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
                     <div className="flex items-center justify-between">
                       <Badge
@@ -92,7 +96,8 @@ const Tickets: FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="h-px bg-gray-100 mx-4"></div>
+                <div
+                  className={`h-px bg-gray-100 mx-4 ${selected === ticket._id ? 'hidden' : 'block'}`}></div>
               </div>
             ))}
           </div>
