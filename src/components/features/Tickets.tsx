@@ -39,13 +39,13 @@ const Tickets: FC = () => {
     );
 
   return (
-    <div className="p-5 bg-white h-full">
-      <div className="h-full">
+    <div className="bg-white h-full">
+      <div className="h-full flex flex-col justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-600 mb-4">
+          <h1 className="text-2xl font-semibold text-slate-600 mb-4 px-5">
             Queue List
           </h1>
-          <div className="w-full mb-10">
+          <div className="w-full mb-10 px-5">
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
@@ -56,7 +56,7 @@ const Tickets: FC = () => {
             </div>
           </div>
 
-          <ScrollArea className="h-[--vh-less-300] w-full">
+          <ScrollArea className="h-[--vh-less-300] w-full px-5">
             {data?.results?.map((ticket) => (
               <div key={ticket._id} onClick={() => setActiveTicket(ticket._id)}>
                 <div
@@ -103,7 +103,7 @@ const Tickets: FC = () => {
             ))}
           </ScrollArea>
         </div>
-        <div className="text-center mt-5">
+        <div className="text-center py-5">
           <Button
             variant="outline"
             className="mr-5 rounded-xl px-2 py-1"
