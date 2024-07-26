@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Badge } from '../ui/badge';
+import { ScrollArea } from '../ui/scroll-area';
 
 const pagedParams = new PagedParams();
 
@@ -38,7 +39,7 @@ const Tickets: FC = () => {
     );
 
   return (
-    <div className="p-5 bg-white">
+    <div className="p-5 bg-white h-full">
       <div className="h-full">
         <div>
           <h1 className="text-2xl font-semibold text-slate-600 mb-4">
@@ -55,7 +56,7 @@ const Tickets: FC = () => {
             </div>
           </div>
 
-          <div className="overflow-y-auto py-2">
+          <ScrollArea className="h-[--vh-less-300] w-full">
             {data?.results?.map((ticket) => (
               <div key={ticket._id} onClick={() => setActiveTicket(ticket._id)}>
                 <div
@@ -100,7 +101,7 @@ const Tickets: FC = () => {
                   className={`h-px bg-gray-100 mx-4 ${selected === ticket._id ? 'hidden' : 'block'}`}></div>
               </div>
             ))}
-          </div>
+          </ScrollArea>
         </div>
         <div className="text-center mt-5">
           <Button

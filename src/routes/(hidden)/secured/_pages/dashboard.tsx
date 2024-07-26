@@ -8,7 +8,7 @@ export const Route = createFileRoute('/(hidden)/secured/_pages/dashboard')({
 
 const Dashboard: FC = () => {
   return (
-    <div className="flex">
+    <div className="flex h-full">
       <div className="w-1/4">
         <Tickets />
       </div>

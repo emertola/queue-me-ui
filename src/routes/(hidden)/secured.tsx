@@ -147,7 +147,7 @@ const SecuredApp: FC = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
-        <main className="flex flex-1 flex-col gap-4 lg:gap-6 bg-gray-100">
+        <main className="flex flex-1 flex-col gap-4 lg:gap-6 bg-gray-100 h-full">
           <Outlet />
           {/* <div className="flex items-center">
             <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
