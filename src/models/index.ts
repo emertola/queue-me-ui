@@ -4,3 +4,4 @@ export * from './login-data.model';
 export * from './sign-up.model';
 export * from './paged.model';
 export * from './ticket.model';
+export * from './serving-window.model';

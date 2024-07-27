@@ -13,17 +13,17 @@ import { Check, CircleUserRound, Hourglass, X } from 'lucide-react';
 import TooltipPlaceholder from '../shared/TooltipPlaceholder';
 
 interface AssignedWindowProps {
-  isMe: boolean;
-  ticketNumber: number;
+  isMe?: boolean;
+  ticketNumber?: number;
   windowStatus: WindowStatus;
-  windowNumber: number;
+  windowName: string;
 }
 
 const AssignedWindow: FC<AssignedWindowProps> = ({
   isMe,
   ticketNumber,
   windowStatus,
-  windowNumber,
+  windowName,
 }) => {
   const status = (): string => {
     if (windowStatus === WindowStatus.ACTIVE) return 'Active';
@@ -41,7 +41,9 @@ const AssignedWindow: FC<AssignedWindowProps> = ({
       <CardHeader className="pb-2">
         <CardContent className="relative px-0">
           <div className="flex items-center justify-between">
-            NOW SERVING
+            {windowStatus === WindowStatus.ACTIVE
+              ? 'NOW SERVING'
+              : 'PLEASE WAIT'}
             <Badge
               variant="outline"
               className={`flex px-2 text-gray-700 ${!isMe ? 'hidden' : ''}`}>
@@ -73,13 +75,13 @@ const AssignedWindow: FC<AssignedWindowProps> = ({
             </div>
           </TooltipPlaceholder>
           <div className="text-5xl text-center mt-4 font-bold">
-            {ticketNumber}
+            {ticketNumber || '--'}
           </div>
         </CardContent>
       </CardHeader>
       <CardFooter className="p-0">
         <div className="w-full border-t bg-blue-600 text-white rounded-b-lg text-center font-semibold py-1">
-          WINDOW {windowNumber}
+          {windowName ? `WINDOW ${windowName}` : '--'}
         </div>
       </CardFooter>
     </Card>
