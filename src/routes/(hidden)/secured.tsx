@@ -1,5 +1,4 @@
 import {
-  Bell,
   CircleUser,
   Home,
   LineChart,
@@ -27,6 +26,7 @@ import {
   redirect,
 } from '@tanstack/react-router';
 import { getToken } from '@/api';
+import DisplayProfile from '@/components/features/DisplayProfile';
 
 export const Route = createFileRoute('/(hidden)/secured')({
   beforeLoad: () => {
@@ -48,14 +48,14 @@ const SecuredApp: FC = () => {
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Button className="flex items-center gap-2 font-semibold text-primary bg-transparent hover:bg-muted">
               <Package2 className="h-6 w-6" />
-              <span className="">Acme Inc</span>
-            </Button>
-            <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
-              <Bell className="h-4 w-4" />
-              <span className="sr-only">Toggle notifications</span>
+              <span className="">Logo Here</span>
             </Button>
           </div>
           <div className="flex-1">
+            <div className="my-5">
+              <DisplayProfile />
+            </div>
+
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <Button
                 className="flex items-center justify-start gap-3 rounded-lg bg-transparent px-3 py-2 text-primary transition-all hover:text-primary hover:bg-muted"
@@ -64,18 +64,6 @@ const SecuredApp: FC = () => {
                   <Home className="h-4 w-4" />
                   Dashboard
                 </Link>
-              </Button>
-              <Button className="flex items-center justify-start gap-3 rounded-lg bg-transparent px-3 py-2 text-primary transition-all hover:text-primary hover:bg-muted">
-                <Package className="h-4 w-4" />
-                Products
-              </Button>
-              <Button className="flex items-center justify-start gap-3 rounded-lg bg-transparent px-3 py-2 text-primary transition-all hover:text-primary hover:bg-muted">
-                <Users className="h-4 w-4" />
-                Customers
-              </Button>
-              <Button className="flex items-center justify-start gap-3 rounded-lg bg-transparent px-3 py-2 text-primary transition-all hover:text-primary hover:bg-muted">
-                <LineChart className="h-4 w-4" />
-                Analytics
               </Button>
             </nav>
           </div>
@@ -118,52 +106,30 @@ const SecuredApp: FC = () => {
               </nav>
             </SheetContent>
           </Sheet>
-          <div className="w-full flex-1">
-            {/* <form>
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search products..."
-                  className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
-                />
-              </div>
-            </form> */}
+          <div className="w-full flex justify-end">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="rounded-full">
+                  <CircleUser className="h-5 w-5" />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem>Support</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </header>
         <main className="flex flex-1 flex-col gap-4 lg:gap-6 bg-gray-100 h-full">
           <Outlet />
-          {/* <div className="flex items-center">
-            <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
-          </div> */}
-          {/* <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
-            
-            <div className="flex flex-col items-center gap-1 text-center">
-              <h3 className="text-2xl font-bold tracking-tight">
-                You have no products
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                You can start selling as soon as you add a product.
-              </p>
-              <Button className="mt-4">Add Product</Button>
-            </div>
-          </div> */}
         </main>
       </div>
     </div>
