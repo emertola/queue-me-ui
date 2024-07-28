@@ -9,16 +9,27 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Gender } from '@/enums';
 import { Route } from '@/routes/__root';
 import { useMutation } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import { FC, useState } from 'react';
+
+const genderOptions = Object.values(Gender);
 
 const SignUp: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [gender, setGender] = useState<string>('');
   const navigate = Route.useNavigate();
 
   const mutation = useMutation({
@@ -35,7 +46,7 @@ const SignUp: FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    mutation.mutate({ firstName, lastName, email, password });
+    mutation.mutate({ firstName, lastName, gender, email, password });
   };
 
   return (
@@ -49,27 +60,40 @@ const SignUp: FC = () => {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="first-name">First name</Label>
-                <Input
-                  id="first-name"
-                  placeholder="Max"
-                  required
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="last-name">Last name</Label>
-                <Input
-                  id="last-name"
-                  placeholder="Robinson"
-                  required
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </div>
+            <div className="grid gap-2">
+              <Label htmlFor="first-name">First name</Label>
+              <Input
+                id="first-name"
+                placeholder="Max"
+                required
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="last-name">Last name</Label>
+              <Input
+                id="last-name"
+                placeholder="Robinson"
+                required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="gender">Gender</Label>
+              <Select value={gender} onValueChange={(val) => setGender(val)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select gender" />
+                </SelectTrigger>
+                <SelectContent>
+                  {genderOptions.map((g) => (
+                    <SelectItem key={g} value={g.toUpperCase()}>
+                      {g}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
