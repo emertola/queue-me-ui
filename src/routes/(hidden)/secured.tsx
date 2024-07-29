@@ -65,6 +65,14 @@ const SecuredApp: FC = () => {
                   Dashboard
                 </Link>
               </Button>
+              <Button
+                className="flex items-center justify-start gap-3 rounded-lg bg-transparent px-3 py-2 text-primary transition-all hover:text-primary hover:bg-muted"
+                asChild>
+                <Link to="/secured/personnel-list">
+                  <Users className="h-4 w-4" />
+                  Personnel
+                </Link>
+              </Button>
             </nav>
           </div>
         </div>

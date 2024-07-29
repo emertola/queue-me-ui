@@ -39,10 +39,10 @@ const Tickets: FC = () => {
     );
 
   return (
-    <div className="bg-white h-full">
+    <div className="bg-white h-full py-3">
       <div className="h-full flex flex-col justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-600 mb-4 px-5">
+          <h1 className="text-2xl font-semibold text-gray-700 mb-4 px-5">
             Queue List
           </h1>
           <div className="w-full mb-10 px-5">
@@ -103,7 +103,7 @@ const Tickets: FC = () => {
             ))}
           </ScrollArea>
         </div>
-        <div className="text-center py-5">
+        <div className="text-center pt-4">
           <Button
             variant="outline"
             className="mr-5 rounded-xl px-2 py-1"

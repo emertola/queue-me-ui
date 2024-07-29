@@ -36,9 +36,10 @@ export const currentUser = async (): Promise<ApiResponse<User>> => {
   const response = await apiClient.get<ApiResponse<User>>(
     `${host}/api/v1/auth/me`
   );
+  cacheUser(response.data.data);
   return response.data;
 };
 
 export const getToken = () => localStorage.getItem('token');
 export const cacheUser = (data: User) =>
-  localStorage.setItem('user', JSON.stringify(data));
+  localStorage.setItem('currentUser', JSON.stringify(data));

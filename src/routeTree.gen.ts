@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as hiddenSecuredImport } from './routes/(hidden)/secured'
+import { Route as hiddenSecuredPagesPersonnelListImport } from './routes/(hidden)/secured/_pages/personnel-list'
 import { Route as hiddenSecuredPagesDashboardImport } from './routes/(hidden)/secured/_pages/dashboard'
 
 // Create Virtual Routes
@@ -37,6 +38,12 @@ const hiddenSecuredRoute = hiddenSecuredImport.update({
   path: '/secured',
   getParentRoute: () => rootRoute,
 } as any)
+
+const hiddenSecuredPagesPersonnelListRoute =
+  hiddenSecuredPagesPersonnelListImport.update({
+    path: '/personnel-list',
+    getParentRoute: () => hiddenSecuredRoute,
+  } as any)
 
 const hiddenSecuredPagesDashboardRoute =
   hiddenSecuredPagesDashboardImport.update({
@@ -76,6 +83,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof hiddenSecuredPagesDashboardImport
       parentRoute: typeof hiddenSecuredImport
     }
+    '/(hidden)/secured/_pages/personnel-list': {
+      id: '/secured/_pages/personnel-list'
+      path: '/personnel-list'
+      fullPath: '/secured/personnel-list'
+      preLoaderRoute: typeof hiddenSecuredPagesPersonnelListImport
+      parentRoute: typeof hiddenSecuredImport
+    }
   }
 }
 
@@ -86,6 +100,7 @@ export const routeTree = rootRoute.addChildren({
   SignupLazyRoute,
   hiddenSecuredRoute: hiddenSecuredRoute.addChildren({
     hiddenSecuredPagesDashboardRoute,
+    hiddenSecuredPagesPersonnelListRoute,
   }),
 })
 
@@ -111,11 +126,16 @@ export const routeTree = rootRoute.addChildren({
     "/secured": {
       "filePath": "(hidden)/secured.tsx",
       "children": [
-        "/secured/_pages/dashboard"
+        "/secured/_pages/dashboard",
+        "/secured/_pages/personnel-list"
       ]
     },
     "/secured/_pages/dashboard": {
       "filePath": "(hidden)/secured/_pages/dashboard.tsx",
+      "parent": "/secured"
+    },
+    "/secured/_pages/personnel-list": {
+      "filePath": "(hidden)/secured/_pages/personnel-list.tsx",
       "parent": "/secured"
     }
   }
