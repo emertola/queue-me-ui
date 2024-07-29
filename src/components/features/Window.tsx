@@ -9,8 +9,7 @@ import {
 import { WindowStatus } from '@/enums';
 import { FC } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Check, CircleUserRound, Hourglass, X } from 'lucide-react';
-import TooltipPlaceholder from '../shared/TooltipPlaceholder';
+import { CircleUserRound } from 'lucide-react';
 
 interface AssignedWindowProps {
   isMe?: boolean;
@@ -44,38 +43,18 @@ const AssignedWindow: FC<AssignedWindowProps> = ({
             {windowStatus === WindowStatus.ACTIVE
               ? 'NOW SERVING'
               : 'PLEASE WAIT'}
+            <Badge variant="outline" className={`flex px-2 ${colorStatus()}`}>
+              {status()}
+            </Badge>
             <Badge
               variant="outline"
-              className={`flex px-2 text-gray-700 ${!isMe ? 'hidden' : ''}`}>
-              <CircleUserRound size={15} className="mr-1" />
-              You
+              className={`flex px-[.25rem] py-[0.02rem] text-gray-700 absolute bottom-0 right-0 ${!isMe ? 'hidden' : ''}`}>
+              <CircleUserRound size={12} className="mr-1" />
+              <span className="text-[8px]">You</span>
             </Badge>
           </div>
-          <TooltipPlaceholder text={status()}>
-            <div
-              className={`rounded-full w-fit p-1 absolute -top-8 -right-8 cursor-pointer ${colorStatus()}`}>
-              <Check
-                size={12}
-                className={
-                  windowStatus === WindowStatus.ACTIVE ? 'block' : 'hidden'
-                }
-              />
-              <Hourglass
-                size={12}
-                className={
-                  windowStatus === WindowStatus.IDLE ? 'block' : 'hidden'
-                }
-              />
-              <X
-                size={12}
-                className={
-                  windowStatus === WindowStatus.INACTIVE ? 'block' : 'hidden'
-                }
-              />
-            </div>
-          </TooltipPlaceholder>
           <div className="text-5xl text-center mt-4 font-bold">
-            {ticketNumber || '--'}
+            {ticketNumber ?? '--'}
           </div>
         </CardContent>
       </CardHeader>

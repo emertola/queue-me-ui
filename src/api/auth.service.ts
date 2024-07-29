@@ -2,7 +2,7 @@ import {
   ApiResponse,
   LoginData,
   LoginResponse,
-  SignUp,
+  SignUpData,
   SignUpResponse,
   User,
 } from '@/models';
@@ -24,7 +24,7 @@ export const login = async (data: LoginData) => {
   return response.data;
 };
 
-export const signUp = async (data: SignUp): Promise<SignUpResponse> => {
+export const signUp = async (data: SignUpData): Promise<SignUpResponse> => {
   const response = await apiClient.post<SignUpResponse>(
     `${host}/api/v1/auth/signup`,
     data

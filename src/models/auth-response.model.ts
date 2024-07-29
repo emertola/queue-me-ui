@@ -1,9 +1,9 @@
-import { SignUp } from './sign-up.model';
+import { SignUpData } from './sign-up.model';
 
 export interface LoginResponse {
   token: string;
 }
 
-export interface SignUpResponse extends SignUp {
+export interface SignUpResponse extends SignUpData {
   _id: string;
 }
