@@ -39,10 +39,10 @@ const Tickets: FC = () => {
     );
 
   return (
-    <div className="bg-white h-full py-3">
+    <div className="bg-white h-full py-4 rounded-xl">
       <div className="h-full flex flex-col justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-700 mb-4 px-5">
+          <h1 className="text-2xl font-semibold text-gray-800 mb-4 px-5">
             Queue List
           </h1>
           <div className="w-full mb-10 px-5">

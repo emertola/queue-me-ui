@@ -33,8 +33,10 @@ const PersonnelList: FC = () => {
   return (
     <div className="p-4">
       <Card>
-        <CardHeader>
-          <CardTitle>Personnel</CardTitle>
+        <CardHeader className="p-4 px-5">
+          <CardTitle className="text-2xl font-semibold text-gray-800">
+            Personnel
+          </CardTitle>
           <CardDescription>
             Add, edit, and delete personnel, and assign window.
           </CardDescription>

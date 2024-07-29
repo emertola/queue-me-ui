@@ -16,7 +16,7 @@ const WindowsList: FC = () => {
     );
 
   return (
-    <div className="flex flex-wrap gap-4 p-2">
+    <div className="flex flex-wrap gap-4">
       {data?.data?.map((swindow) => (
         <div key={swindow._id}>
           <AssignedWindow
