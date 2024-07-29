@@ -63,6 +63,7 @@ const Login: FC = () => {
                 <Label htmlFor="password">Password</Label>
                 <Button
                   variant="link"
+                  tabIndex={-1}
                   className="ml-auto inline-block text-sm underline">
                   Forgot your password?
                 </Button>
