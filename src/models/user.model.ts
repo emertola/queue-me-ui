@@ -1,3 +1,5 @@
+import { Gender } from '@/enums';
+
 export interface User {
   firstName: string;
   middleName?: string;
@@ -8,4 +10,5 @@ export interface User {
   roles?: string[];
   _id?: string;
   imgUrl?: string;
+  gender: Gender;
 }

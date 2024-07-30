@@ -1,5 +1,4 @@
-import useQueryTickets from '@/hooks/query-tickets.hook';
-import { PagedParams } from '@/models';
+import { PagedParams, PagedResponse, Ticket } from '@/models';
 import { FC, useState } from 'react';
 import { Button } from '../ui/button';
 import { ChevronLeft, ChevronRight, Ellipsis, Search } from 'lucide-react';
@@ -12,13 +11,18 @@ import {
 } from '../ui/dropdown-menu';
 import { Badge } from '../ui/badge';
 import { ScrollArea } from '../ui/scroll-area';
+import usePagedQuery from '@/hooks/paged-query.hook';
+import { getTicketsList } from '@/api';
 
 const pagedParams = new PagedParams();
 
 const Tickets: FC = () => {
   const [params, setParams] = useState(pagedParams);
   const [selected, setSelected] = useState<string>();
-  const { data, error, isLoading } = useQueryTickets(params);
+  const { data, error, isLoading } = usePagedQuery(params, ['tickets'], () =>
+    getTicketsList(params)
+  );
+  const responseData = data as PagedResponse<Ticket>;
 
   const setPage = (args?: PagedParams) => {
     if (args?.page && args?.page < 0) {
@@ -57,7 +61,7 @@ const Tickets: FC = () => {
           </div>
 
           <ScrollArea className="h-[--vh-less-300] w-full px-5">
-            {data?.results?.map((ticket) => (
+            {responseData?.results?.map((ticket) => (
               <div key={ticket._id} onClick={() => setActiveTicket(ticket._id)}>
                 <div
                   className={`p-3 rounded-xl focus-visible:outline-transparent hover:bg-gray-50 ${selected === ticket._id ? 'shadow-md border border-slate-100' : ''}`}>
@@ -107,7 +111,7 @@ const Tickets: FC = () => {
           <Button
             variant="outline"
             className="mr-5 rounded-xl px-2 py-1"
-            disabled={!data?.currentPage}
+            disabled={!responseData?.currentPage}
             onClick={() =>
               setPage({ page: params.page - 1, size: params.size })
             }>
@@ -116,7 +120,7 @@ const Tickets: FC = () => {
           <Button
             variant="outline"
             className="rounded-xl px-2 py-1"
-            disabled={!data?.hasNextPage}
+            disabled={!responseData?.hasNextPage}
             onClick={() =>
               setParams((prev) => ({ ...prev, page: prev.page + 1 }))
             }>

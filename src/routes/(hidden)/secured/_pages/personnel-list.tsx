@@ -1,4 +1,4 @@
-import PersonnelList from '@/components/features/PersonnelList';
+import PersonnelList from '@/components/features/PersonnelList/PersonnelList';
 import { createFileRoute } from '@tanstack/react-router';
 import { FC } from 'react';
 
