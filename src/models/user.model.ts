@@ -11,4 +11,5 @@ export interface User {
   _id?: string;
   imgUrl?: string;
   gender: Gender;
+  active: boolean;
 }
