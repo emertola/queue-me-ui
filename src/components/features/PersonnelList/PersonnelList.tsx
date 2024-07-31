@@ -7,14 +7,21 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import { FC, useState } from 'react';
-import { getPersonnelList } from '@/api';
+import { createContext, FC, useState } from 'react';
+import { getPersonnelList, getWindowsList } from '@/api';
 import usePagedQuery from '@/hooks/paged-query.hook';
-import { PagedParams, PagedResponse, User } from '@/models';
+import { PagedParams, PagedResponse, ServingWindow, User } from '@/models';
 import DataTable from './data-table';
-import { columns } from './columns';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { getColumns } from './columns';
+import { useQuery } from '@tanstack/react-query';
+
+export const AssignOptionsContext = createContext([
+  'option 1',
+  'option 2',
+  'option 3',
+]);
 
 const pagedParams = new PagedParams();
 
@@ -25,6 +32,16 @@ const PersonnelList: FC = () => {
   );
   const responseData = data as PagedResponse<User>;
 
+  const {
+    data: sWindowsData,
+    error: sWindowsError,
+    isLoading: sWindowsLoading,
+  } = useQuery({
+    queryKey: ['swindows'],
+    queryFn: () => getWindowsList({ unassignedOnly: 'true' }),
+  });
+  const responseSWindows = sWindowsData?.data as ServingWindow[];
+
   const setPage = (args?: PagedParams) => {
     if (args?.page && args?.page < 0) {
       args.page = 0;
@@ -33,10 +50,23 @@ const PersonnelList: FC = () => {
     setParams((prevParams) => ({ ...prevParams, ...newParams }));
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error)
+  const handleAssign = (id: string) => {
+    console.log('assign', id);
+  };
+
+  const actions = {
+    onAssign: handleAssign,
+    windowsOptions: responseSWindows,
+  };
+
+  const columns = getColumns(actions);
+
+  if (isLoading || sWindowsLoading) return <div>Loading...</div>;
+  if (error || sWindowsError)
     return (
-      <div className="text-red-600">{error.message || 'Request failed.'}</div>
+      <div className="text-red-600">
+        {error?.message || sWindowsError?.message || 'Request failed.'}
+      </div>
     );
 
   return (
@@ -51,7 +81,11 @@ const PersonnelList: FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <DataTable columns={columns} data={responseData?.results} />
+          <DataTable
+            columns={columns}
+            data={responseData?.results}
+            onAssign={handleAssign}
+          />
         </CardContent>
         <CardFooter className="justify-center">
           <div className="text-center pt-4">

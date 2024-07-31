@@ -1,9 +1,15 @@
 import { Badge } from '@/components/ui/badge';
 import { Gender, UserStatus } from '@/enums';
-import { User } from '@/models';
+import { ServingWindow, User } from '@/models';
 import { ColumnDef } from '@tanstack/react-table';
+import PersonnelListActions from './actions';
 
-export const columns: ColumnDef<User>[] = [
+interface GetColumnsProps {
+  onAssign: (id: string) => void;
+  windowsOptions: ServingWindow[];
+}
+
+export const getColumns = (actions: GetColumnsProps): ColumnDef<User>[] => [
   {
     accessorKey: 'lastName',
     header: 'Name',
@@ -50,6 +56,17 @@ export const columns: ColumnDef<User>[] = [
             </Badge>
           )}
         </div>
+      );
+    },
+  },
+  {
+    id: 'actions',
+    cell: () => {
+      return (
+        <PersonnelListActions
+          onAssign={actions.onAssign}
+          windowsOptions={actions.windowsOptions}
+        />
       );
     },
   },

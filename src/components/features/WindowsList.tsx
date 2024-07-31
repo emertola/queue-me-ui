@@ -6,7 +6,7 @@ import AssignedWindow from './Window';
 const WindowsList: FC = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['swindows'],
-    queryFn: getWindowsList,
+    queryFn: () => getWindowsList(),
   });
 
   if (isLoading) return <div>Loading...</div>;
