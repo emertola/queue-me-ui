@@ -2,12 +2,18 @@ import { getWindowsList } from '@/api';
 import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 import AssignedWindow from './Window';
+import { User } from '@/models';
 
 const WindowsList: FC = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['swindows'],
     queryFn: () => getWindowsList(),
   });
+
+  const currentUser: User = JSON.parse(
+    localStorage.getItem('currentUser') as string
+  );
+  const currentUserId = currentUser?._id;
 
   if (isLoading) return <div>Loading...</div>;
   if (error)
@@ -20,7 +26,7 @@ const WindowsList: FC = () => {
       {data?.data?.map((swindow) => (
         <div key={swindow._id}>
           <AssignedWindow
-            isMe={false}
+            isMe={swindow.assignedPersonnelId?._id === currentUserId}
             ticketNumber={swindow.nowServing?.ticketNumber}
             windowStatus={swindow.windowStatus}
             windowName={swindow.windowName}

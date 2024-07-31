@@ -43,7 +43,9 @@ const AssignedWindow: FC<AssignedWindowProps> = ({
             {windowStatus === WindowStatus.ACTIVE
               ? 'NOW SERVING'
               : 'PLEASE WAIT'}
-            <Badge variant="outline" className={`flex px-2 ${colorStatus()}`}>
+            <Badge
+              variant="outline"
+              className={`flex px-2 border-0 text-[11px] ${colorStatus()}`}>
               {status()}
             </Badge>
             <Badge

@@ -75,12 +75,10 @@ export const getColumns = (actions: GetColumnsProps): ColumnDef<User>[] => [
   {
     id: 'actions',
     cell: ({ row }) => {
-      if (row.original?.assignedWindow) {
-        return <></>;
-      }
       return (
         <PersonnelListAssignActions
           personnelId={row.original?._id as string}
+          currentWindowId={row.original?.assignedWindow?._id}
           onAssign={actions.onAssign}
           windowsOptions={actions.windowsOptions}
         />

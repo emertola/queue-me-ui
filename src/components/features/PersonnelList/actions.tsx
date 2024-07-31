@@ -15,14 +15,16 @@ import { FC } from 'react';
 
 interface PersonnelListAssignActionsProps {
   personnelId: string;
-  onAssign: (personnelId: string, window: string) => void;
+  onAssign: (personnelId: string, window: string, assign: boolean) => void;
   windowsOptions: ServingWindow[];
+  currentWindowId?: string;
 }
 
 const PersonnelListAssignActions: FC<PersonnelListAssignActionsProps> = ({
   personnelId,
   onAssign,
   windowsOptions,
+  currentWindowId,
 }) => {
   return (
     <DropdownMenu>
@@ -36,18 +38,26 @@ const PersonnelListAssignActions: FC<PersonnelListAssignActionsProps> = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Assign to window</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            {windowsOptions.map((w) => (
-              <DropdownMenuItem
-                key={w._id}
-                onClick={() => onAssign(personnelId, w._id)}>
-                {w.windowName}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        {!currentWindowId && (
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>Assign window</DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              {windowsOptions.map((w) => (
+                <DropdownMenuItem
+                  key={w._id}
+                  onClick={() => onAssign(personnelId, w._id, true)}>
+                  {w.windowName}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+        )}
+        {currentWindowId && (
+          <DropdownMenuItem
+            onClick={() => onAssign(personnelId, currentWindowId, false)}>
+            Unassign window
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

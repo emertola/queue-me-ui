@@ -51,7 +51,6 @@ const PersonnelList: FC = () => {
     mutationFn: assignPersonnelToWindow,
     onSuccess: () => {
       // Handle successful login, e.g., save token, redirect, etc.
-      // navigate({ to: '/secured' });
       queryClient.invalidateQueries({ queryKey: ['personnel'] });
     },
     onError: (error) => {
@@ -68,8 +67,12 @@ const PersonnelList: FC = () => {
     setParams((prevParams) => ({ ...prevParams, ...newParams }));
   };
 
-  const handleAssign = (personnelId: string, windowId: string) => {
-    mutation.mutate({ windowId, personnelId });
+  const handleAssign = (
+    personnelId: string,
+    windowId: string,
+    assign = true
+  ) => {
+    mutation.mutate({ windowId, personnelId, assign });
   };
 
   const actions = {

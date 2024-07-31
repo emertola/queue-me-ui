@@ -12,6 +12,7 @@ export const getPersonnelList = async (params: PagedParams) => {
 export const assignPersonnelToWindow = async (data: {
   windowId: string;
   personnelId: string;
+  assign: boolean;
 }) => {
   const response = await apiClient.put(
     `${host}/api/v1/personnel/${data.personnelId}`,
