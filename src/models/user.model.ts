@@ -1,4 +1,5 @@
 import { Gender } from '@/enums';
+import { ServingWindow } from './serving-window.model';
 
 export interface User {
   firstName: string;
@@ -12,4 +13,5 @@ export interface User {
   imgUrl?: string;
   gender: Gender;
   active: boolean;
+  assignedWindow?: ServingWindow;
 }

@@ -8,14 +8,18 @@ import {
 } from '@/components/ui/card';
 
 import { createContext, FC, useState } from 'react';
-import { getPersonnelList, getWindowsList } from '@/api';
+import {
+  assignPersonnelToWindow,
+  getPersonnelList,
+  getWindowsList,
+} from '@/api';
 import usePagedQuery from '@/hooks/paged-query.hook';
 import { PagedParams, PagedResponse, ServingWindow, User } from '@/models';
 import DataTable from './data-table';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { getColumns } from './columns';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const AssignOptionsContext = createContext([
   'option 1',
@@ -26,6 +30,7 @@ export const AssignOptionsContext = createContext([
 const pagedParams = new PagedParams();
 
 const PersonnelList: FC = () => {
+  const queryClient = useQueryClient();
   const [params, setParams] = useState(pagedParams);
   const { data, error, isLoading } = usePagedQuery(params, ['personnel'], () =>
     getPersonnelList(params)
@@ -42,6 +47,19 @@ const PersonnelList: FC = () => {
   });
   const responseSWindows = sWindowsData?.data as ServingWindow[];
 
+  const mutation = useMutation({
+    mutationFn: assignPersonnelToWindow,
+    onSuccess: () => {
+      // Handle successful login, e.g., save token, redirect, etc.
+      // navigate({ to: '/secured' });
+      queryClient.invalidateQueries({ queryKey: ['personnel'] });
+    },
+    onError: (error) => {
+      // Handle error
+      console.error('Encountred an error', error);
+    },
+  });
+
   const setPage = (args?: PagedParams) => {
     if (args?.page && args?.page < 0) {
       args.page = 0;
@@ -50,8 +68,8 @@ const PersonnelList: FC = () => {
     setParams((prevParams) => ({ ...prevParams, ...newParams }));
   };
 
-  const handleAssign = (id: string) => {
-    console.log('assign', id);
+  const handleAssign = (personnelId: string, windowId: string) => {
+    mutation.mutate({ windowId, personnelId });
   };
 
   const actions = {

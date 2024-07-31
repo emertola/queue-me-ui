@@ -13,12 +13,14 @@ import { ServingWindow } from '@/models';
 import { Ellipsis } from 'lucide-react';
 import { FC } from 'react';
 
-interface PersonnelListActionsProps {
-  onAssign: (id: string) => void;
+interface PersonnelListAssignActionsProps {
+  personnelId: string;
+  onAssign: (personnelId: string, window: string) => void;
   windowsOptions: ServingWindow[];
 }
 
-const PersonnelListActions: FC<PersonnelListActionsProps> = ({
+const PersonnelListAssignActions: FC<PersonnelListAssignActionsProps> = ({
+  personnelId,
   onAssign,
   windowsOptions,
 }) => {
@@ -38,7 +40,9 @@ const PersonnelListActions: FC<PersonnelListActionsProps> = ({
           <DropdownMenuSubTrigger>Assign to window</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             {windowsOptions.map((w) => (
-              <DropdownMenuItem key={w._id} onClick={() => onAssign(w._id)}>
+              <DropdownMenuItem
+                key={w._id}
+                onClick={() => onAssign(personnelId, w._id)}>
                 {w.windowName}
               </DropdownMenuItem>
             ))}
@@ -49,4 +53,4 @@ const PersonnelListActions: FC<PersonnelListActionsProps> = ({
   );
 };
 
-export default PersonnelListActions;
+export default PersonnelListAssignActions;

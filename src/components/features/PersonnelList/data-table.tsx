@@ -19,7 +19,7 @@ import { FC } from 'react';
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  onAssign: (id: string) => void;
+  onAssign: (personnelId: string, windowId: string) => void;
 }
 
 const DataTable: FC<DataTableProps<User, unknown>> = ({ columns, data }) => {

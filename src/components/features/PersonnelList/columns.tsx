@@ -2,10 +2,10 @@ import { Badge } from '@/components/ui/badge';
 import { Gender, UserStatus } from '@/enums';
 import { ServingWindow, User } from '@/models';
 import { ColumnDef } from '@tanstack/react-table';
-import PersonnelListActions from './actions';
+import PersonnelListAssignActions from './actions';
 
 interface GetColumnsProps {
-  onAssign: (id: string) => void;
+  onAssign: (personnelId: string, windowId: string) => void;
   windowsOptions: ServingWindow[];
 }
 
@@ -37,6 +37,19 @@ export const getColumns = (actions: GetColumnsProps): ColumnDef<User>[] => [
     },
   },
   {
+    id: 'assignedWindow',
+    header: () => {
+      return <div className="text-center">Assigned Window</div>;
+    },
+    cell: ({ row }) => {
+      return (
+        <div className="text-center">
+          {row.original?.assignedWindow?.windowName}
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => {
@@ -61,9 +74,13 @@ export const getColumns = (actions: GetColumnsProps): ColumnDef<User>[] => [
   },
   {
     id: 'actions',
-    cell: () => {
+    cell: ({ row }) => {
+      if (row.original?.assignedWindow) {
+        return <></>;
+      }
       return (
-        <PersonnelListActions
+        <PersonnelListAssignActions
+          personnelId={row.original?._id as string}
           onAssign={actions.onAssign}
           windowsOptions={actions.windowsOptions}
         />
