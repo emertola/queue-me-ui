@@ -1,9 +1,11 @@
-import { host } from '@/constants';
-import apiClient from './api-client.service';
-import { ApiResponse, ServingWindow } from '@/models';
+import { host } from "@/constants";
+import apiClient from "./api-client.service";
+import { ApiResponse, ServingWindow } from "@/models";
 
-interface WindowsQueryParams {
-  unassignedOnly: string;
+export interface WindowsQueryParams {
+  unassignedOnly?: string;
+  noActiveTicket?: string;
+  activeOnly?: string;
 }
 
 export const getWindowsList = async (

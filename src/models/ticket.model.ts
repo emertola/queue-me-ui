@@ -1,4 +1,4 @@
-import { TicketStatus } from '@/enums';
+import { TicketStatus } from "@/enums";
 
 export interface Ticket {
   _id?: string;
@@ -8,4 +8,9 @@ export interface Ticket {
   isPriority: boolean;
   firstName?: string;
   lastName?: string;
+}
+
+export interface AssignTicket {
+  ticket: Ticket;
+  personnelId: string;
 }

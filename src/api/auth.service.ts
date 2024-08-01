@@ -5,22 +5,22 @@ import {
   SignUpData,
   SignUpResponse,
   User,
-} from '@/models';
-import apiClient from './api-client.service';
-import { host } from '@/constants';
+} from "@/models";
+import apiClient from "./api-client.service";
+import { host } from "@/constants";
 
 export const loginPromise = async (data: LoginData) => {
   const response = await apiClient.post<Promise<ApiResponse<LoginResponse>>>(
     `${host}/api/v1/auth/login`,
     data
   );
-  localStorage.setItem('token', (await response.data).data.token);
+  localStorage.setItem("token", (await response.data).data.token);
   return response;
 };
 
 export const login = async (data: LoginData) => {
   const response = await loginPromise(data);
-  localStorage.setItem('token', (await response.data).data.token);
+  localStorage.setItem("token", (await response.data).data.token);
   return response.data;
 };
 
@@ -40,6 +40,10 @@ export const currentUser = async (): Promise<ApiResponse<User>> => {
   return response.data;
 };
 
-export const getToken = () => localStorage.getItem('token');
+export const getToken = () => localStorage.getItem("token");
 export const cacheUser = (data: User) =>
-  localStorage.setItem('currentUser', JSON.stringify(data));
+  localStorage.setItem("currentUser", JSON.stringify(data));
+export const getCurrentUser = () => {
+  const user: User = JSON.parse(localStorage.getItem("currentUser") as string);
+  return user ? user._id : null;
+};
