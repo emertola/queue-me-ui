@@ -1,19 +1,19 @@
-import { AssignTicket, PagedParams, PagedResponse, Ticket } from "@/models";
-import { FC, useState } from "react";
-import { Button } from "../ui/button";
-import { ChevronLeft, ChevronRight, Ellipsis, Search } from "lucide-react";
-import { Input } from "../ui/input";
+import { AssignTicket, PagedParams, PagedResponse, Ticket } from '@/models';
+import { FC, useState } from 'react';
+import { Button } from '../ui/button';
+import { ChevronLeft, ChevronRight, Ellipsis, Search } from 'lucide-react';
+import { Input } from '../ui/input';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Badge } from "../ui/badge";
-import { ScrollArea } from "../ui/scroll-area";
-import usePagedQuery from "@/hooks/paged-query.hook";
-import { assignTicket, getCurrentUser, getTicketsList } from "@/api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+} from '../ui/dropdown-menu';
+import { Badge } from '../ui/badge';
+import { ScrollArea } from '../ui/scroll-area';
+import usePagedQuery from '@/hooks/paged-query.hook';
+import { assignTicket, getCurrentUser, getTicketsList } from '@/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const pagedParams = new PagedParams();
 
@@ -21,7 +21,7 @@ const Tickets: FC = () => {
   const queryClient = useQueryClient();
   const [params, setParams] = useState(pagedParams);
   const [selected, setSelected] = useState<string>();
-  const { data, error, isLoading } = usePagedQuery(params, ["tickets"], () =>
+  const { data, error, isLoading } = usePagedQuery(params, ['tickets'], () =>
     getTicketsList(params)
   );
   const responseData = data as PagedResponse<Ticket>;
@@ -41,7 +41,7 @@ const Tickets: FC = () => {
   const mutation = useMutation({
     mutationFn: assignTicket,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tickets", "swindows"] });
+      queryClient.invalidateQueries({ queryKey: ['tickets'] });
     },
   });
 
@@ -59,7 +59,7 @@ const Tickets: FC = () => {
   if (isLoading) return <p>...Loading</p>;
   if (error)
     return (
-      <div className="text-red-600">{error.message || "Request failed."}</div>
+      <div className="text-red-600">{error.message || 'Request failed.'}</div>
     );
 
   return (
@@ -84,7 +84,7 @@ const Tickets: FC = () => {
             {responseData?.results?.map((ticket) => (
               <div key={ticket._id} onClick={() => setActiveTicket(ticket._id)}>
                 <div
-                  className={`p-3 rounded-xl focus-visible:outline-transparent hover:bg-gray-50 ${selected === ticket._id ? "shadow-md border border-slate-100" : ""}`}>
+                  className={`p-3 rounded-xl focus-visible:outline-transparent hover:bg-gray-50 ${selected === ticket._id ? 'shadow-md border border-slate-100' : ''}`}>
                   <div className="flex flex-col">
                     <div className="flex items-center justify-between">
                       <h3 className="text-xl font-semibold ml-1 mr-4">
@@ -100,10 +100,12 @@ const Tickets: FC = () => {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                          <DropdownMenuItem
-                            onClick={() => handleAssign(ticket)}>
-                            Assign to me
-                          </DropdownMenuItem>
+                          {!ticket?.servingWindow && (
+                            <DropdownMenuItem
+                              onClick={() => handleAssign(ticket)}>
+                              Assign to me
+                            </DropdownMenuItem>
+                          )}
                           <DropdownMenuItem>
                             <span className="text-red-500">Delete</span>
                           </DropdownMenuItem>
@@ -112,20 +114,20 @@ const Tickets: FC = () => {
                     </div>
                     <div className="flex items-center justify-between">
                       <Badge
-                        variant={!ticket.isPriority ? "secondary" : null}
+                        variant={!ticket.isPriority ? 'secondary' : null}
                         className={`font-normal ${
                           ticket.isPriority
-                            ? "bg-amber-500 text-white font-semibold border-transparent"
-                            : ""
+                            ? 'bg-amber-500 text-white font-semibold border-transparent'
+                            : ''
                         }`}>
-                        {ticket.isPriority ? "Priority" : "Regular Transaction"}
+                        {ticket.isPriority ? 'Priority' : 'Regular Transaction'}
                       </Badge>
                       <span className="text-slate-400 text-xs">Waiting</span>
                     </div>
                   </div>
                 </div>
                 <div
-                  className={`h-px bg-gray-100 mx-4 ${selected === ticket._id ? "hidden" : "block"}`}></div>
+                  className={`h-px bg-gray-100 mx-4 ${selected === ticket._id ? 'hidden' : 'block'}`}></div>
               </div>
             ))}
           </ScrollArea>

@@ -21,6 +21,7 @@ import { Route as hiddenSecuredPagesDashboardImport } from './routes/(hidden)/se
 
 const SignupLazyImport = createFileRoute('/signup')()
 const SigninLazyImport = createFileRoute('/signin')()
+const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
@@ -33,6 +34,11 @@ const SigninLazyRoute = SigninLazyImport.update({
   path: '/signin',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/signin.lazy').then((d) => d.Route))
+
+const IndexLazyRoute = IndexLazyImport.update({
+  path: '/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
 const hiddenSecuredRoute = hiddenSecuredImport.update({
   path: '/secured',
@@ -55,6 +61,13 @@ const hiddenSecuredPagesDashboardRoute =
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/signin': {
       id: '/signin'
       path: '/signin'
@@ -96,6 +109,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
+  IndexLazyRoute,
   SigninLazyRoute,
   SignupLazyRoute,
   hiddenSecuredRoute: hiddenSecuredRoute.addChildren({
@@ -112,10 +126,14 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/",
         "/signin",
         "/signup",
         "/secured"
       ]
+    },
+    "/": {
+      "filePath": "index.lazy.tsx"
     },
     "/signin": {
       "filePath": "signin.lazy.tsx"

@@ -6,3 +6,4 @@ export * from './paged.model';
 export * from './ticket.model';
 export * from './serving-window.model';
 export * from './user.model';
+export * from './web-socket-content.model';
